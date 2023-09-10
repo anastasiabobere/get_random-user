@@ -2,11 +2,18 @@ function fetchUSer(){
     showSpinner();
     fetch("https://randomuser.me/api")
     .then((res)=>{
+      if(!res.ok){
+        throw new Error("Request failed")
+      }
        return res.json()
     })
     .then((data)=>{
         hideSpinner();
         displayUser(data.results[0])
+    })
+    .catch((error)=>{
+      hideSpinner();
+      document.querySelector("#user").innerHTML=`<p class ="text-xl text-center text-red-500 mb-5"> ${error}<p>`
     })
 };
 
